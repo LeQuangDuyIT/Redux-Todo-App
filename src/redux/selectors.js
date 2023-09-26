@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 
 export const todoListSelector = state => state.todoList;
 
-export const searchTextSelector = state => state.filter.search;
+export const searchTextSelector = state => state.filters.search;
 
 export const todoRemainingSelector = createSelector(
 	todoListSelector,

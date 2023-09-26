@@ -1,6 +1,6 @@
 const initState = [];
 
-const todoReducer = (state = initState, action) => {
+const todoListReducer = (state = initState, action) => {
 	switch (action.type) {
 		case 'todoList/addTodo':
 			return [...state, action.payload];
@@ -9,4 +9,4 @@ const todoReducer = (state = initState, action) => {
 	}
 };
 
-export default todoReducer;
+export default todoListReducer;
