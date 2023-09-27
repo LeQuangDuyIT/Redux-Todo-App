@@ -1,9 +1,9 @@
 import { createSelector } from 'reselect';
-const searchTextSelector = state => state.filters.search;
+export const searchTextSelector = state => state.filters.search;
 
-const statusSelector = state => state.filters.status;
+export const statusSelector = state => state.filters.status;
 
-const prioritySelector = state => state.filters.priority;
+export const prioritySelector = state => state.filters.priority;
 
 export const todoListSelector = state => state.todoList;
 

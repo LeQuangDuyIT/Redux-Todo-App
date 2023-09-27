@@ -1,25 +1,22 @@
 import { Col, Row, Input, Typography, Radio, Select, Tag } from 'antd';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { searchFilterChange, statusFilterChange, priorityFilterChange } from '../../redux/actions';
+import { searchTextSelector, statusSelector, prioritySelector } from '../../redux/selectors';
 
 const { Search } = Input;
 
 export default function Filters() {
-	const [searchText, setSearchText] = useState('');
-	const [filterStatus, setFilterStatus] = useState('All');
+	const searchText = useSelector(searchTextSelector);
+	const filterStatus = useSelector(statusSelector);
+	const filterPriority = useSelector(prioritySelector);
 	const dispatch = useDispatch();
 
 	const onSearchTextChange = e => {
-		const filterKey = e.target.value;
-		setSearchText(filterKey);
-		dispatch(searchFilterChange(filterKey));
+		dispatch(searchFilterChange(e.target.value));
 	};
 
 	const onFilterStatusTypeChange = e => {
-		const filterType = e.target.value;
-		setFilterStatus(filterType);
-		dispatch(statusFilterChange(filterType));
+		dispatch(statusFilterChange(e.target.value));
 	};
 
 	const onFilterPriorityChange = value => {
@@ -52,7 +49,7 @@ export default function Filters() {
 					mode='multiple'
 					allowClear
 					placeholder='Please select'
-					defaultValue={[]}
+					value={filterPriority}
 					onChange={onFilterPriorityChange}
 					style={{ width: '100%' }}
 				>

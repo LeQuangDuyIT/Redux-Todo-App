@@ -1,7 +1,12 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Col, Row, Input, Button, Select, Tag, Space } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTodo } from '../../redux/actions';
+import {
+	addTodo,
+	searchFilterChange,
+	statusFilterChange,
+	priorityFilterChange
+} from '../../redux/actions';
 import { v4 as uuidv4 } from 'uuid';
 import Todo from '../Todo';
 import { todoRemainingSelector } from '../../redux/selectors';
@@ -9,11 +14,19 @@ import { todoRemainingSelector } from '../../redux/selectors';
 export default function TodoList() {
 	const [todoName, setTodoName] = useState('');
 	const [todoPriority, setTodoPriority] = useState('Low');
-	const dispatch = useDispatch();
+	const [isError, setIsError] = useState(false);
 
+	const inputRef = useRef(null);
+
+	const dispatch = useDispatch();
 	const todoList = useSelector(todoRemainingSelector);
 
 	const handleAddButtonClick = () => {
+		if (todoName === '') {
+			setIsError(true);
+			inputRef.current.focus();
+			return;
+		}
 		dispatch(
 			addTodo({
 				id: uuidv4(),
@@ -22,6 +35,9 @@ export default function TodoList() {
 				isCompleted: false
 			})
 		);
+		dispatch(searchFilterChange(''));
+		dispatch(statusFilterChange('All'));
+		dispatch(priorityFilterChange([]));
 		setTodoName('');
 		setTodoPriority('Low');
 	};
@@ -35,7 +51,15 @@ export default function TodoList() {
 			</Col>
 			<Col span={24}>
 				<Space.Compact style={{ display: 'flex' }}>
-					<Input value={todoName} onChange={e => setTodoName(e.target.value)} />
+					<Input
+						ref={inputRef}
+						value={todoName}
+						onChange={e => setTodoName(e.target.value)}
+						onInput={() => setIsError(false)}
+						onBlur={() => setIsError(false)}
+						status={isError ? 'error' : undefined}
+						style={{ zIndex: '1' }}
+					/>
 					<Select
 						defaultValue='Medium'
 						value={todoPriority}
