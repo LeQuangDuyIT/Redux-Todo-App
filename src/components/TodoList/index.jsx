@@ -18,7 +18,7 @@ export default function TodoList() {
 			addTodo({
 				id: uuidv4(),
 				name: todoName,
-				prioriry: todoPriority,
+				priority: todoPriority,
 				isCompleted: false
 			})
 		);
@@ -30,7 +30,7 @@ export default function TodoList() {
 		<Row style={{ height: 'calc(100% - 40px)' }}>
 			<Col span={24} style={{ height: 'calc(100% - 40px)', overflowY: 'auto' }}>
 				{todoList.map(todo => (
-					<Todo key={todo.id} name={todo.name} prioriry={todo.prioriry} />
+					<Todo key={todo.id} data={todo} />
 				))}
 			</Col>
 			<Col span={24}>
