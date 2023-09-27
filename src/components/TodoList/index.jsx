@@ -2,7 +2,6 @@ import { useRef, useState } from 'react';
 import { Col, Row, Input, Button, Select, Tag, Space } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-	addTodo,
 	searchFilterChange,
 	statusFilterChange,
 	priorityFilterChange
@@ -10,6 +9,7 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 import Todo from '../Todo';
 import { todoRemainingSelector } from '../../redux/selectors';
+import todoListSlice from './TodoListSlice';
 
 export default function TodoList() {
 	const [todoName, setTodoName] = useState('');
@@ -28,7 +28,7 @@ export default function TodoList() {
 			return;
 		}
 		dispatch(
-			addTodo({
+			todoListSlice.actions.addTodo({
 				id: uuidv4(),
 				name: todoName,
 				priority: todoPriority,
